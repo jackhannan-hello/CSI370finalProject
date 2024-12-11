@@ -1,0 +1,118 @@
+\documentclass[twoside]{article}
+\usepackage{fullpage}
+\usepackage[pdftex]{graphicx}
+\usepackage{wrapfig}
+\usepackage{amsmath}
+\usepackage{hyperref}
+\usepackage{sectsty}
+\documentclass{article}
+\usepackage{blindtext}
+%Image-related packages
+\usepackage{graphicx}
+\usepackage{subcaption}
+\usepackage[export]{adjustbox}
+%\sectionfont{\fontsize{13}{15}\selectfont}
+\usepackage{fixltx2e}
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+\fancyhead{}
+\fancyfoot{}
+\renewcommand{\headrulewidth}{0pt}
+\fancyfoot[LO]{\emph{Hall - CSI 370}}
+\fancyfoot[LE]{\emph{Research 1 - Project}}
+\fancyfoot[R] {\thepage}
+\newenvironment{code}{\fontfamily{lmtt}\selectfont}{}
+\date{}
+\begin{document}
+\title{CSI 370 Computer Architecture \\ Research 1 - Project}
+\author{Jack Hannan}
+\maketitle
+\renewcommand{\labelitemi}{$\diamond$}
+\section{\textbf{Blackjack}}
+
+The project I decided to work was to create a Blackjack game that you could play by your self. I chose blackjack because I enjoy playing casino card games with my friends. I did not think that blackjack was too complicated a game to make and you can also play it by yourself, so there is some practicality, as I do not think I could create a game with multiple users. My goal at the start of this project was to create something similar to the picture below, it might not be as colorful.   Over the semester I enjoyed coding in assembly so I wanted to do a project that would let me do a lot of that. The only code that that is not in assembly is getting user input, printing to the console, and shuffling the deck. Now there are some features of blackjack missing from the version I created and also the way it works is not the same as it would in a casino.
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width=0.5\linewidth]{image.png}
+    \caption{Example of what the game could look like}
+    \label{Example}
+\end{figure}
+
+\section{Blackjack Rules}
+Blackjack is a game of you verse the dealer even if there are other people people playing at the same table. The goal of blackjack to get to a combined card value of twenty one. If you go over twenty one you lose but if the dealer goes over 21 but you did not you win. If neither you or the dealer got to twenty one and did not go over twenty one then who ever is closest to twenty one wins. If you and the dealer have the same card value then its a draw and you do not lose any money. Unless you go twenty one with your first two cards in that case you would win and be get paid out with three to two odds instead of one to one odds. When it comes to the value associated with each card its not to difficult except maybe for the ace. The numbered cards are the value of what ever number is on them. For jack, queen, and king all those cards are worth ten. For an ace card it can have two values being eleven or one. So if you get an ace you can decided for it to be an eleven or a one and you can change its value when ever you want to. Blackjack is a fairly simile game though there are a lot of interesting complexnesses when it comes to probabilities. It game that seems like there would not be much strategy in but there is if you are able to keep track of the cards that used recently. If you are able to do that it can give you better insight on how you should go about playing your next if you ever get in a situation were you are contemplating getting another card.
+
+The game play of blackjack is also fairly simple the games stares out with the dealers deals a card to everyone playing then to themselves faced down and then deals a second card to everyone face up including the dealer. Then after everyone has a card the player to the left of the dealer goes first in deciding what actions they want to make. The most basic actions are hit and stand where hit is where you ask for another card to help you to get to twenty, and stand is where signal you do not want anymore cards. Another option you could make is you can double down which is where you double your bet and you get only one extra card to help you get to twenty one. You can split your hand into two if you are dealt the same type of cards, like if you got dealt two kings, you also get dealt a new card for each hand and you have to make a new bet for your new hand as well. There is also something called insurance for when the dealer is showing that they may have a natural blackjack and if the dealer has a natural blackjack it pays two to one. Another thing to add is it standard for a dealer to stand once the get anything of value seventeen or higher. So another reason I decided to do my project on blackjack is I like all the complexities in an otherwise simple game.
+
+\section{Process}
+I used MASM and C++ as the language for this and I linked an .asm file to a .cpp file so that I could use both of those languages and it was done in 64 bit. The way I went about coding all of the different needs for this project was I would build on top of everything. So I would start with getting the initial user input, the getting the deck to shuffle, then deal the cards out and play the game of blackjack. One thing that took up some of my time was figuring out how I wanted to do things and trying to do as much as possible with techniques learned this semester and not relying to much on c++. Another thing that took up some of my time was trying to go for my more ambitions goals and not just get blackjack to work and worry about that later. I even changed the way the decked worked towards the end as I felt like the change made it easier to implement. A big part of my project is calling functions and passing variables to those functions especially the linked functions between MASM and C++. Excluding the main function in MASM code I have six functions but two of them are basically the same function one calculates score for the player the other for the dealer. The the two function dealing with player actions are similar as the player has more options and needs to get user input where the dealer has pretty set rules on what they do. Then I had a function that did an initial deal for the start of the game and a function that dealt with determine that outcome of the game. Then I had a function in the c++ file to shuffle the array,  print to console the state of the table, get user input for variety of things, and also print messages to the user via the console.
+
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width=0.5\linewidth]{blackjack_player_actions.png}
+    \caption{Player Hits}
+    \label{fig:player-hits}
+\end{figure}
+
+\subsection{Limitations}
+There are somethings that are in the normal game of blackjack that I did not include in my game of blackjack. I did not include the ability to make an insurance bet as I think it is a dumb bet so I did not want to put it in my version.  I also did not include the ability to split your hand as I did not have enough time to do that though I would have wanted to do it. I did implement the ability to double down however there is no way of stopping a person from doubling down a second time. I wanted to only use one deck for my version as I fell like I am making a version of blackjack that you would play with your friends at someone's house and not at a casino where they use six to eight decks at each table they have of blackjack.
+
+\subsubsection{Arrays}
+A big part of the project was arrays. Which can cause some problems because making sure you are using the right array or the right counter to go through the array can be difficult to keep track of. I had three arrays one for the deck of cards, one for the cards the player has, and one for the cards the dealer has. Another problem I ran into is making sure I am working with player data and dealer data in the right spots since the code sections for them look very similar to each other. Which is annoying especially when coding in MASM where those issue might not be as easy to compared to higher level languages where colors allowing them to pop out and be more visible.
+
+\subsection{Dealing Cards}
+When it comes to dealing cards to the player and the dealer you have the initial deal and then the in game deals. The initial deal is pretty straight forward you go through the deck array and you alternate between the player and dealer twice. Then when it comes to deal cards to the player and dealer in the game it is a little more complicated as there are more things that need to be kept track of. You have to keep track of the position you are in dealing cards from the deck and also the position to where you are going to the payer's or dealer's next card to because otherwise could could replace a card dealt instead of deal a new card. One of the most import things when it comes to keeping track of those positions is to reset them when you start a new game otherwise everything will messed up.
+
+\subsection{Checking Total Card Score}
+This part was a bit tricky for me at first because initial I had all of the card values as string so figuring out how to convert the ASCII values into numerical values was tricky. Then I realized that since I am just outputting the the card values to console I do not need to store the numbered cards as strings and then just check for if the an ace comes up because the rest jack, queen, king are all worth ten. Dealing with the ace was interesting because I did not want to include any more arrays into the program so dealing with the fact that the ace is two different values at once was a bit annoying. I stored the value of card score in an unused register, as I did not want to alter the card score before determining what value I wanted to give the ace, and added eleven to it and seen if it cause the score to bust. If adding eleven caused a bust I gave the ace a value of one other the ace's value was eleven. Also to deal with the fact that one turn you may wont the ace to be an eleven and the next it do be an one I reset the card score every time I went to check it.
+
+\begin{figure}[h]
+\begin{subfigure}{0.6\textwidth}
+\includegraphics[width=0.9\linewidth, height=6cm]{game_layout.png} 
+\caption{Flow of the Game}
+\label{fig:subim1}
+\end{subfigure}
+\begin{subfigure}{0.6\textwidth}
+\includegraphics[width=0.9\linewidth, height=6cm]{calculating_playerscore.png}
+\caption{Calculating Player Card Value}
+\label{fig:subim2}
+\end{subfigure}
+\caption{Two Examples From Code}
+\label{fig:image2}
+\end{figure}
+
+\section{Challenges and Solutions}
+\subsection{Shuffling}
+One of the challenges I faced was shuffling the array acting as a deck of cards. At first I was trying to do it using intrinsics but I didn't really understand how to do it because I was shuffling strings and the shuffle was for floating numbers. I realize now that it probably would have worked because the the array gets passed over as ints. Though another thing that confused me was you were only able to shuffle a small portion of an array at a time. So I then went to try to figure how to write a shuffle function in MASM and realized that I did not have enough time for this so I decided to just have a built in function in c++ do the shuffling for me to solve my shuffling problem.
+
+\subsection{Displaying the Table State}
+Initially I wanted to have some sort of graphical competent to my project but I learned I did not have enough time to research all that was need for this. As I could use the message box but I think it would look weird clicking buttons to have you do something in blackjack but it not be label that in the message box. Also it took me a bit to realize this and I was trying to create a big string to serve a the message in the message box and I kept running into trouble there of converting the ints passed to the function into characters. To solve this issue I decided I was going to just print the table state to console and just cout everything. Another issue I had related to the table state was that I wanted to show how much money the player had and how much they were betting. I kept running into problems with this as I was already passing four variables to that function so those two variables had to be passed to the function from the stack. I kept having problems passing variables through the stack. So I just make a new print to the console function and passed those two variables through by themselves.
+
+\subsection{Functions Not working}
+I started working on the project with the deck on being thirteen cards one of each card can my functions seemed to be working. Then I attempted to have the deck be a complete deck of cards but I got an error saying that the deck array was too big. So then I decided to use half a deck and it ran but after that everything with my code has been messed up. Especially when it comes to the functions pertaining to the dealer. I have not be able to figure out why and how to fix it. So I have the deck back to thirteen cards on of each card but the dealer functions still do not seem to work.
+
+\section{Things I Would Have Liked to Have Done}
+If I had more time to work on this assignment I would have liked to polish it up a bit more and understand exactly why I am getting so of the problems I am having. Also I think it does not print out ten properly it just prints out 0. So if I had more time I would have liked to do a deep dive into debugging all of the functions I use and getting all of the code to work properly. I also would have liked to implement more things into the program like be able to split you hand when given the opportunity to do so. I would have liked to properly implement the double down feature as the way it is right now its not properly implemented. The possible out comes from doubling down are you bust and lose double your wager, you beat the dealer and just earn your wager, or you lose to the dealer and lose your wager. Also there is nothing stopping some one from doubling down after they hit which is not allowed in blackjack. I also would have liked to fix the dealer because for some reason it does not seem like the dealer want to hit ever. This makes it not feel like you are playing against anyone if the dealer never hits as the stakes of hitting when you have fifth teen or sixteen are lower because you know the dealer will stay with whatever they got. I also would have liked to incorporate some sort of graphical competent into the game. Instead of the user typing in their input of what they want to do in the game have them press buttons of what they want to do in the game. I also would have liked to make the way the output of the program looks better. I think a big one is not spending so much time on researching and learning things that I ultimately did not even use because if I could of had that time to fix the problems in my code now I think my program would run a lot smother.
+
+\section{Visualizations}
+Here are some results of the current state of the code
+\begin{figure}[h]
+\begin{subfigure}{0.6\textwidth}
+\includegraphics[width=0.9\linewidth, height=7cm]{blackjack_result1.png} 
+\caption{Result of One Game}
+\label{fig:subim1}
+\end{subfigure}
+\begin{subfigure}{0.6\textwidth}
+\includegraphics[width=0.9\linewidth, height=8cm]{blackjack_result2.png}
+\caption{Result of Two Games}
+\label{fig:subim2}
+\end{subfigure}
+\caption{Output From Playing Blackjack}
+\label{fig:image2}
+\end{figure}
+
+\section{Sources}
+\begin{itemize}
+    \item Google AI when you search shuffle vector c++ on Google
+\end{itemize}
+\end{document}
+
